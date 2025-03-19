@@ -14,25 +14,20 @@ struct Schedule
 void addSchedule(Schedule *&head, string title, string time)
 {
     Schedule *newSchedule = new Schedule(title, time);
-    if (!head || head->time > time)
+
+    if (!head || head->time > time)  // Jika list kosong atau aktivitas baru harus menjadi head
     {
         newSchedule->next = head;
         head = newSchedule;
         return;
     }
-    else
-    {
-        Schedule *temp = head;
-        while (temp->next && temp->next->time < time)
-            temp = temp->next;
-        newSchedule->next = temp->next;
-        temp->next = newSchedule;
-    }
-    {
-        newSchedule->next = head;
-        head = newSchedule;
-        return;
-    }
+
+    Schedule *temp = head;
+    while (temp->next && temp->next->time < time) // Mencari posisi yang tepat untuk menyisipkan
+        temp = temp->next;
+
+    newSchedule->next = temp->next;
+    temp->next = newSchedule;
 }
 
 void deleteSchedule(Schedule *&head, string title)
